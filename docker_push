@@ -1,0 +1,7 @@
+#!/bin/bash
+export REPO=godraude/currency-exchange
+export TAG=`if [ "$BRANCH" == "master" ]; then echo "latest"; else echo $BRANCH ; fi`
+docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+docker build -t $REPO:$COMMIT .
+docker tag $REPO:$COMMIT $REPO:$TAG
+docker push $REPO
