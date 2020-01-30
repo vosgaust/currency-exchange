@@ -57,7 +57,10 @@ const showAlert = function(elementID, type, message) {
   if(alert) {
     alert.classList.add(className);
     alert.classList.add(classes[type]);
-    setTimeout(() => alert.classList.remove(className), 2000);
+    setTimeout(() => {
+      alert.classList.remove(className);
+      alert.classList.remove(classes[type]);
+    }, 2000);
   }
 };
 
