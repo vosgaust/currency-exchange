@@ -16,7 +16,7 @@ describe('Get an exchange rate', () => {
     });
     fetch.mockImplementation(() => response);
     const result = await exchangeRates.getExchangeRate('USD', 'EUR');
-    expect(result).toBe(returnBody.rates.EUR);
+    expect(result).toBe(parseFloat(returnBody.rates.EUR.toFixed(4)));
   });
 
   it('Should return null if currency codes are not valid', async () => {
@@ -42,5 +42,23 @@ describe('Get available currencies', () => {
     fetch.mockImplementation(() => response);
     const result = await exchangeRates.getAvailableCurrencies();
     expect(result).toEqual(Object.keys(currencyCodesResponse.rates).concat(currencyCodesResponse.base));
+  });
+
+  it('Should return empty array if there is an error in code', async () => {
+    fetch.mockImplementation(() => Promise.reject());
+    const result = await exchangeRates.getAvailableCurrencies();
+    expect(result).toEqual([]);
+  });
+
+  it('Should return empty array if there is an error in request', async () => {
+    const returnBody = { error: true };
+    const response = Promise.resolve({
+      ok: true,
+      status: 'ok',
+      json: () => returnBody,
+    });
+    fetch.mockImplementation(() => response);
+    const result = await exchangeRates.getAvailableCurrencies();
+    expect(result).toEqual([]);
   });
 });

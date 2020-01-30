@@ -16,7 +16,7 @@ class ExchangeRatesService {
     const response = await fetch(`${this.apiURL}/${endpoint}?base=${sellCurrency}&symbols=${buyCurrency}`);
     const json = await response.json();
     if(!json.error) {
-      return json.rates[buyCurrency].toFixed(4);
+      return parseFloat(json.rates[buyCurrency].toFixed(4));
     }
     return null;
   }
@@ -26,12 +26,16 @@ class ExchangeRatesService {
    */
   async getAvailableCurrencies() {
     const endpoint = 'latest';
-    const response = await fetch(`${this.apiURL}/${endpoint}`);
-    const json = await response.json();
-    if(!json.error) {
-      return Object.keys(json.rates).concat(json.base);
+    try {
+      const response = await fetch(`${this.apiURL}/${endpoint}`);
+      const json = await response.json();
+      if(!json.error) {
+        return Object.keys(json.rates).concat(json.base);
+      }
+      return [];
+    } catch (err) {
+      return [];
     }
-    return [];
   }
 }
 
