@@ -1,0 +1,23 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_PASSWORD=user
+      - POSTGRES_USER=user
+      - POSTGRES_DB=currency_exchange
+    volumes:
+      - ./postgresql/create_table.sql:/docker-entrypoint-initdb.d/create_table.sql
+    ports:
+      - 5432:5432
+  # app:
+  #   image: currency_exchange
+  #   build: .
+  #   environment:
+  #     - POSTGRES_PASSWORD=user
+  #     - POSTGRES_USER=user
+  #     - POSTGRES_DB=currency_exchange
+  #     - TRADES_TABLE_NAME=trades
+  #   depends_on:
+  #     - "postgres"
+  #   entrypoint: ["./wait-for-postgres.sh", "postgres", "npm", "start"]
