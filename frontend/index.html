@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Currency Exchange</title>
+  <script src="https://npmcdn.com/vue/dist/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div id="app">
+    <button id="new-trade" @click=showForm>New Trade</button>
+    <div id="new-trade-form" class="wrapper" :class="{hidden: !showNewTradeForm}">
+     
+     <div id="main-form">
+      <div id="sellForm" class="box">
+        <span>Sell Currency</span>
+        <select v-model="sellCurrency" class="minimal">
+          <option v-for="currency in availableCurrencies">{{ currency }}</option>
+        </select>
+        <span>Sell Amount</span>
+        <input v-model="sellAmount" type="number" placeholder="0.00"></input>
+      </div>
+
+      <div class="arrow-right box"></div>
+
+      <div id="rateForm" class="box">
+        <span>Rate</span>
+        <span>{{ rate }}</span>
+      </div>
+
+      <div class="arrow-right box"></div>
+
+      <div id="buyForm" class="box">
+        <span>Buy Currency</span>
+        <select v-model="buyCurrency" class="minimal">
+          <option v-for="currency in availableCurrencies">{{ currency }}</option>
+        </select>
+        <span>Buy Amount</span>
+        <input disabled v-model="buyAmount"></input>
+      </div>
+     </div>
+
+    <div id="confirm-buttons">
+      <button id="confirm-trade" @click=confirmTrade>Confirm</button>
+      <button id="cancel-trade" @click=showForm>Cancel</button>
+    </div>
+      <div id="alert-modal" class="alert" role="alert">{{ alertMessage }}</div>
+    </div>
+    <p :class="{hidden: trades.length !== 0}">There are no records in the database</p>
+    <table >
+      <thead>
+        <tr>
+          <th v-for="col in columnsNames">{{ col }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="trade in trades">
+          <td v-for="col in columns">{{ trade[col] }}</td>
+        </tr>
+      </tbody>
+   </table>
+   <div id="page-navigation">
+     <button @click=movePages(-1)>Back</button>
+     <p>{{ currentPage }} out of {{ totalPages }}</p>
+     <button @click=movePages(1)>Next</button>
+  </div>
+
+
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
