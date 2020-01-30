@@ -1,7 +1,16 @@
 const request = require('supertest');
 const app = require('../../../app');
 
-const baseEndpoint = '/status';
+const baseEndpoint = '/api/status';
+
+jest.mock('pg', () => {
+  const client = {
+    connect: jest.fn((callback) => callback()),
+    query: jest.fn(),
+    end: jest.fn()
+  };
+  return { Client: jest.fn(() => client) };
+});
 
 describe('Status endpoint', () => {
   it('Returns code 200', async () => {
@@ -13,6 +22,6 @@ describe('Status endpoint', () => {
 describe('Fallback endpoint', () => {
   it('Returns code 400 if the endpoint or method is not found', async () => {
     const res = await request(app).get('/fakeendpoint');
-    expect(res.statusCode).toBe(400);
+    expect(res.statusCode).toBe(404);
   });
 });
