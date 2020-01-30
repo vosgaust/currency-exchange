@@ -1,0 +1,42 @@
+{
+  "name": "currency-exchange",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "eslint \"**/*.js\" --ignore-pattern node_modules/ && jest --collect-coverage",
+    "lint": "eslint \"**/*.js\" --ignore-pattern node_modules/",
+    "test:functional": "jest functional",
+    "test:unit": "jest unit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:vosgaust/currency-exchange.git"
+  },
+  "author": "Edu Garcia Moyano",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vosgaust/currency-exchange"
+  },
+  "homepage": "https://gitlab.com/cabify-challenge/car-pooling-challenge-vosgaust#README",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0",
+    "pg": "^7.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.0",
+    "jest": "^24.9.0",
+    "supertest": "^4.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  }
+}
