@@ -5,6 +5,6 @@ ADD . /app
 WORKDIR /app
 RUN npm install --only=prod
 
-RUN chmod u+x wait-for-postgres.sh
+RUN chmod +x wait-for-postgres.sh
  
 ENTRYPOINT [ "npm", "start" ]

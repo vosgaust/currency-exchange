@@ -11,7 +11,7 @@ services:
     ports:
       - 5432:5432
   api:
-    image: currency_exchange
+    image: godraude/currency-exchange
     build: .
     environment:
       - POSTGRES_PASSWORD=user
