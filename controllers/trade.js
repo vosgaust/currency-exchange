@@ -37,6 +37,7 @@ const add = async function(req, res) {
     const currentRate = await req.exchangeRatesService.getExchangeRate(req.body.sellCurrency, req.body.buyCurrency);
     const sellAmount = parseFloat(req.body.sellAmount);
     const rate = parseFloat(req.body.changeRate);
+    // We check if the rate has changed since the user loaded the page
     if(rate !== currentRate) {
       return res.status(400).send({ status: 'error', msg: 'The exchange rate has changed' });
     }
@@ -47,7 +48,7 @@ const add = async function(req, res) {
       req.body.changeRate);
     return res.status(200).json({ status: 'ok' });
   } catch (err) {
-    return res.status(400).send({ status: 'error', msg: err });
+    return res.status(400).send({ status: 'error', msg: 'There was an error in the request' });
   }
 };
 
