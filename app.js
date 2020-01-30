@@ -24,13 +24,13 @@ postgres.connect((err) => {
 });
 
 const app = express();
+const router = express.Router();
 app.use(cors());
 const exchangeRatesService = new ExchangeRatesService();
 
 const tableName = process.env.TRADES_TABLE_NAME || 'trades';
 
 const tradesRepository = new TradesRepository(postgres, tableName);
-
 const _injectDependency = function (name, dependency) {
   return (req, res, next) => {
     req[name] = dependency;
@@ -38,30 +38,32 @@ const _injectDependency = function (name, dependency) {
   };
 };
 
-app.get('/status', (req, res) => {
+router.get('/status', (req, res) => {
   res.status(200).send();
 });
 
-app.get('/trade/list',
+router.get('/trade/list',
   _injectDependency('tradesRepository', tradesRepository),
   tradeController.list);
 
-app.post('/trade/add', bodyParser.json(),
+router.post('/trade/add', bodyParser.json(),
   _injectDependency('exchangeRatesService', exchangeRatesService),
   _injectDependency('tradesRepository', tradesRepository),
   tradeController.add);
 
-app.get('/exchange/currencies',
+router.get('/exchange/currencies',
   _injectDependency('exchangeRatesService', exchangeRatesService),
   exchangeController.getCurrencies);
 
-app.get('/exchange/rate',
+router.get('/exchange/rate',
   _injectDependency('exchangeRatesService', exchangeRatesService),
   exchangeController.getExchangeRate);
 
 
-app.use((req, res) => {
+router.use((req, res) => {
   res.sendStatus(400);
 });
+
+app.use('/api', router);
 
 module.exports = app;
