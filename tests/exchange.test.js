@@ -1,6 +1,5 @@
 const request = require('supertest');
-const postgres = require('pg');
-const app = require('../../../app');
+const app = require('../app');
 
 const baseEndpoint = '/api/exchange';
 

@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
-const ExchangeRatesService = require('../../services/ExchangeRates');
-const currencyCodesResponse = require('../testData/currencyCodesResponse.json');
+const ExchangeRatesService = require('../services/ExchangeRates');
+const currencyCodesResponse = require('./testData/currencyCodesResponse.json');
 
 jest.mock('node-fetch', () => jest.fn());
 const exchangeRates = new ExchangeRatesService();

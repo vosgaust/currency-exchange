@@ -1,7 +1,7 @@
 const request = require('supertest');
 const fetch = require('node-fetch');
 const Postgres = require('pg').Client;
-const app = require('../../../app');
+const app = require('../app');
 
 const baseEndpoint = '/api/trade';
 
